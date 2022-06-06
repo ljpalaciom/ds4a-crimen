@@ -1,26 +1,25 @@
-from dash import Dash, dcc, html, Input, Output
-import os
+from dash import Dash, dcc, html, Input, Output, callback
+from pages.exploratory import page as exploratory_page
+from pages.prediction import page as prediction_page
+import main_layout
 
+print(dir(main_layout))
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+app = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
 
 server = app.server
 
-app.layout = html.Div([
-    html.H2('Hello World'),
-    dcc.Dropdown(['LA', 'NYC', 'MTL'],
-        'LA',
-        id='dropdown'
-    ),
-    html.Div(id='display-value')
-])
+app.layout = main_layout.layout
 
-@app.callback(Output('display-value', 'children'),
-                [Input('dropdown', 'value')])
-def display_value(value):
-    return f'You have selected {value}'
+@callback(Output('page-content', 'children'),
+              Input('url', 'pathname'))
+def display_page(pathname):
+    if pathname == '/prediction':
+        return prediction_page.layout
+    else:
+        return exploratory_page.layout
 
 if __name__ == '__main__':
     app.run_server(debug=True)
