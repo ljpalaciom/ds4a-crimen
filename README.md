@@ -12,5 +12,5 @@ Team-234
 
 
 ## Install new dependencies
-- Make sure you the virtual environment is active see (Steps to run the APP), install the package with pip install package-name , Update the
+- Make sure the virtual environment is active see (Steps to run the APP), install the package with pip install package-name , Update the
 requirements.txt file with: pip freeze > requirements.txt, commit your changes in git
