@@ -1,13 +1,10 @@
 from dash import Dash, dcc, html, Input, Output, callback
+import dash_bootstrap_components as dbc
 from pages.exploratory import page as exploratory_page
 from pages.prediction import page as prediction_page
 import main_layout
 
-print(dir(main_layout))
-
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
-app = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
 
 server = app.server
 

@@ -1,9 +1,16 @@
 from dash import Dash, dcc, html, Input, Output, callback
-from pages.exploratory import page as exploratory_page
-from pages.prediction import page as prediction_page
+import dash_bootstrap_components as dbc
 
-layout = html.Div([
+
+navbar = dbc.NavbarSimple(
+    brand="Crime Prediction DashBoard - Team 234",
+    brand_href="#",
+    color="primary",
+    dark=True,
+)
+
+layout = dbc.Container(html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Nav('NavBar'),
+    navbar,
     html.Div(id='page-content')
-])
+]), id="main-container")
