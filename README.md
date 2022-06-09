@@ -4,8 +4,8 @@ Here we have crimen datasets from Bogota
 Team-234
 
 ## Prerequisites (Do this only once)
-- Create virtual environment: python3 -m venv venv/
-- Activate the virtual environment: (linux/mac) source venv/bin/activate (windows) .\venv\activate
+- Create virtual environment: python -m venv venv/
+- Activate the virtual environment: (linux/mac) source venv/bin/activate (windows) .\venv\Scripts\activate.bat
 - Install dependencies: pip install -r requirements.txt
 
 ## Steps to run the APP 
