@@ -9,7 +9,7 @@ Team-234
 - Install dependencies: pip install -r requirements.txt
 
 ## Steps to run the APP 
-- Activate the virtual environment: (linux/mac) source venv/bin/activate (windows) .\venv\activate
+- Activate the virtual environment: (linux/mac) source venv/bin/activate (windows) .\venv\Scripts\activate.bat
 - Run the app: python src/app.py
 - Open the browser and visit: http://127.0.0.1:8050/
 
