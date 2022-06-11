@@ -1,21 +1,19 @@
 from dash import dcc, html, Input, Output, callback, dash_table
+import dash_bootstrap_components as dbc
+from pages.exploratory.summary_header import highest_crimes, affected_time_day, trending_felonies
 from dao.dao_csv import getAllCrimes
 
 crimes = getAllCrimes()
 
 layout = html.Div([
-    html.H1('Exploratory Page'),
-    dash_table.DataTable(crimes.head().to_dict('records'), [{"name": i, "id": i} for i in crimes.columns]),
-    dcc.Dropdown(
-        {f'Page 1 - {i}': f'{i}' for i in ['New York City', 'Montreal', 'Los Angeles']},
-        id='page-1-dropdown'
-    ),
+   # dash_table.DataTable(crimes.head().to_dict('records'), [{"name": i, "id": i} for i in crimes.columns]),
+   dbc.CardGroup(
+            [
+                highest_crimes,
+                affected_time_day,
+                trending_felonies,
+            ]
+        ),
     html.Div(id='page-1-display-value'),
     dcc.Link('Go to prediction', href='/prediction')
-])
-
-@callback(
-    Output('page-1-display-value', 'children'),
-    Input('page-1-dropdown', 'value'))
-def display_value(value):
-    return f'You have selected {value}'
+], id="exploratory")
