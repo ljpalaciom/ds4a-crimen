@@ -24,6 +24,12 @@ def getAllCrimes():
     crimes['date'] = pd.to_datetime(crimes['year'].astype(str) + crimes['Nro del Mes'].astype(str), format='%Y%m')
     return crimes
 
+def get_crimes_by_month():
+    crimes = getAllCrimes()
+    crimes_by_month = crimes.groupby(crimes["date"].dt.to_period("M")).size().reset_index(name='crime ammount')
+    crimes_by_month['date'] = crimes_by_month['date'].apply(lambda period: period.to_timestamp()) 
+    return crimes_by_month
+
 def xml_to_csv():
     df = read_xml('https://github.com/ljpalaciom/ds4a-crimen/blob/master/data/crimenes_2019.xml?raw=true', 2019)
     df.to_csv('crimenes_2019.csv')
