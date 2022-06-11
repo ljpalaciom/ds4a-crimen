@@ -16,6 +16,12 @@ def getAllCrimes():
     crime_2020 = getCrimes("2021")
     crime_2021 = getCrimes("2022")
     crimes = pd.concat([crime_2018, crime_2019,crime_2020, crime_2021], ignore_index=True)
+    # transform to correct data types
+    crimes['Numero hechos'] = crimes['Numero hechos'].astype(int)
+    crimes['Nro del Mes'] = crimes['Nro del Mes'].astype(int)
+    crimes['year'] = crimes['year'].astype(int)
+    # Create date column
+    crimes['date'] = pd.to_datetime(crimes['year'].astype(str) + crimes['Nro del Mes'].astype(str), format='%Y%m')
     return crimes
 
 def xml_to_csv():

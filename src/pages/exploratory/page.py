@@ -8,9 +8,6 @@ from pages.exploratory.crimes_over_time import crimes_over_time_layout
 from pages.exploratory.most_frequent_crimes import most_frequent_crimes_layout
 from pages.exploratory.crimes_distribution import crimes_distribution_layout
 from pages.exploratory.gender_distribution import gender_distribution_layout
-from dao.dao_csv import getAllCrimes
-
-crimes = getAllCrimes()
 
 layout = html.Div([
    # dash_table.DataTable(crimes.head().to_dict('records'), [{"name": i, "id": i} for i in crimes.columns]),
