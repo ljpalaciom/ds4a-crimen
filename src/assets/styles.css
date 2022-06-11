@@ -1,4 +1,6 @@
-
+.row {
+    margin: 20px 0;
+}
 
 #exploratory .card-title {
     font-size: 1.4rem;
@@ -9,6 +11,12 @@
     text-align: center;
 }
 
-#exploratory .card-text {
+#summary-header .card-text {
     color: #DA1E28;
+}
+
+#crimes_map {
+    height: 285px;
+    border: 1px solid black;
+    text-align: center;
 }
