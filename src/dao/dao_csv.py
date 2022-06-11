@@ -11,10 +11,10 @@ def getCrimes(year):
     return crime
 
 def getAllCrimes():
-    crime_2018 = getCrimes("2019")
-    crime_2019 = getCrimes("2020")
-    crime_2020 = getCrimes("2021")
-    crime_2021 = getCrimes("2022")
+    crime_2018 = getCrimes("2018")
+    crime_2019 = getCrimes("2019")
+    crime_2020 = getCrimes("2020")
+    crime_2021 = getCrimes("2021")
     crimes = pd.concat([crime_2018, crime_2019,crime_2020, crime_2021], ignore_index=True)
     # transform to correct data types
     crimes['Numero hechos'] = crimes['Numero hechos'].astype(int)
