@@ -17,3 +17,7 @@ Team-234
 ## How to install new dependencies
 - Make sure the virtual environment is active see (Steps to run the APP), install the package with pip install package-name , Update the
 requirements.txt file with: pip freeze > requirements.txt, commit your changes in git
+
+## Deployment
+Every commit to master will trigger codepipeline and deploy the app to this url: http://ds4ateam234crimeapp-env.eba-8mmqfrr8.us-east-1.elasticbeanstalk.com/
+
