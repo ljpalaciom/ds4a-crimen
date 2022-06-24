@@ -29,7 +29,7 @@ def statement(sql_query):
     return db_version
 
 def most_frequent_crimes_():
-    most_frequent_crimes = pd.DataFrame(statement("""select delito, count(*) as sum from crimes
+    most_frequent_crimes = pd.DataFrame(statement("""select delito, sum(numero_hechos) as sum from crimes
                                                     group by delito
                                                     order by sum desc
                                                     limit 10
@@ -40,21 +40,21 @@ def most_frequent_crimes_():
     return fig
 
 def crimes_over_time_():
-    crimes_by_month = pd.DataFrame(statement("select date, count(*) as sum from crimes group by date"))
+    crimes_by_month = pd.DataFrame(statement("select date, sum(numero_hechos) as sum from crimes group by date"))
     crimes_by_month.columns = ['date','crime ammount']
     crimes_by_month.set_index('date')
     fig = px.line(crimes_by_month, x='date', y="crime ammount")
     return fig
 
 def crimes_distribution_():
-    crimes_distribution = pd.DataFrame(statement("select localidad, count(*) as sum from crimes group by localidad"))
+    crimes_distribution = pd.DataFrame(statement("select localidad, sum(numero_hechos) as sum from crimes group by localidad"))
     crimes_distribution.columns = ['localidad','crime ammount']
     crimes_distribution.set_index('localidad')
     fig = px.bar(crimes_distribution, x='localidad', y="crime ammount")
     return fig
 
 def gender_distribution_():
-    gender_distribution = pd.DataFrame(statement("select sexo, count(*) as sum from crimes group by sexo"))
+    gender_distribution = pd.DataFrame(statement("select sexo, sum(numero_hechos) as sum from crimes group by sexo"))
     gender_distribution.columns = ['gender','crime ammount']
     gender_distribution.set_index('gender')
     fig = px.pie(gender_distribution, names='gender', values="crime ammount",color="crime ammount", color_discrete_sequence=px.colors.qualitative.G10)
