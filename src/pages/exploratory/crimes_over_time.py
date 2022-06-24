@@ -1,13 +1,9 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-import pandas as pd 
-from dao.dao_csv import get_crimes_by_month
+from dao.dao_sql import crimes_over_time_
 
-import plotly.express as px
 
-crimes_by_month = get_crimes_by_month()
-
-fig = px.line(crimes_by_month, x='date', y="crime ammount")
+fig = crimes_over_time_()
 
 crimes_over_time_layout = dbc.Card(
     dbc.CardBody(
