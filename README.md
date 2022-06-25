@@ -18,5 +18,5 @@ requirements.txt file with: pip freeze > requirements.txt, commit your changes i
 ## Deployment
 - Buildfile: install dependencies required to comunicate with postgresql on the Ec22 instances
 - Procfile: executes gunicorn as production server
-Every commit to master will trigger codepipeline and deploy the app to this url: http://ds4ateam234crimeapp-env.eba-8mmqfrr8.us-east-1.elasticbeanstalk.com/
+- Every commit to master will trigger codepipeline and deploy the app to this url: http://ds4ateam234crimeapp-env.eba-8mmqfrr8.us-east-1.elasticbeanstalk.com/
 
