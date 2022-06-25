@@ -4,7 +4,7 @@ from pages.exploratory import page as exploratory_page
 from pages.prediction import page as prediction_page
 import main_layout
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.BOOTSTRAP,  dbc.icons.FONT_AWESOME], suppress_callback_exceptions=True)
 
 server = app.server
 
