@@ -1,7 +1,4 @@
-# ds4a-crimen
-Here we have crimen datasets from Bogota
-
-Team-234
+# ds4a-crimen Team-234
 
 ## Prerequisites (Do this only once)
 - Create virtual environment: python -m venv venv/
@@ -19,5 +16,7 @@ Team-234
 requirements.txt file with: pip freeze > requirements.txt, commit your changes in git
 
 ## Deployment
+- Buildfile: install dependencies required to comunicate with postgresql on the Ec22 instances
+- Procfile: executes gunicorn as production server
 Every commit to master will trigger codepipeline and deploy the app to this url: http://ds4ateam234crimeapp-env.eba-8mmqfrr8.us-east-1.elasticbeanstalk.com/
 
