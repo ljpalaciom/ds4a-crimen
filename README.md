@@ -1,6 +1,7 @@
 # ds4a-crimen Team-234
 
 ## Prerequisites (Do this only once)
+- Create .env file with environment variables (ask a colleague for the values)
 - Create virtual environment: python -m venv venv/
 - Activate the virtual environment: (linux/mac) source venv/bin/activate (windows) .\venv\Scripts\activate.bat
 - Install dependencies: pip install -r requirements.txt
