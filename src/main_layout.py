@@ -7,7 +7,7 @@ navbar = dbc.NavbarSimple(
         dbc.NavItem(dbc.NavLink([html.I(className="bi bi-graph-up-arrow nav-icon"), "Forecast Dashboard"], href="/prediction"), className="nav-item"),
     ],
     brand="Crime Prediction DashBoard - Team 234",
-    brand_href="#",
+    brand_href="/",
     color="primary",
     dark=True,
 )
