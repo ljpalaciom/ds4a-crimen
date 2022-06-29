@@ -7,3 +7,4 @@ venv
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+ds4a-crimen.code-workspace

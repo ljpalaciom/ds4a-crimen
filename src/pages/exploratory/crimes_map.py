@@ -4,12 +4,14 @@ import plotly.express as px
 import urllib.request, json
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, callback
-from dao.dao_csv import get_crimes_by_locality_year
-
+#from dao.dao_csv import get_crimes_by_locality_year
+from dao.dao_sql import get_crimes_by_locality_year
 # -- Import and clean data (importing csv into pandas)
-with urllib.request.urlopen('https://datosabiertos.bogota.gov.co/dataset/856cb657-8ca3-4ee8-857f-37211173b1f8/resource/497b8756-0927-4aee-8da9-ca4e32ca3a8a/download/loca.geojson') as json_file:
-    localidades = json.load(json_file)
+#with urllib.request.urlopen('https://datosabiertos.bogota.gov.co/dataset/856cb657-8ca3-4ee8-857f-37211173b1f8/resource/497b8756-0927-4aee-8da9-ca4e32ca3a8a/download/loca.geojson') as json_file:
+    #localidades = json.load(json_file)
 # ------------------------------------------------------------------------------
+with open('data/geojson/loca.geojson') as f:
+    localidades = json.load(f)
 # App layout
 map_layout = html.Div([
     html.P('Seleccione el año que desea consultar:'),

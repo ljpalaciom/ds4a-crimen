@@ -1,9 +1,10 @@
-import os 
+import os
+import numpy as np
 import psycopg2
 from dotenv import load_dotenv
 import pandas as pd
 import plotly.express as px
-
+import unidecode
 
 def postgres_connect():
     load_dotenv()
@@ -29,7 +30,7 @@ def statement(sql_query):
     return db_version
 
 def most_frequent_crimes_():
-    most_frequent_crimes = pd.DataFrame(statement("""select delito, sum(numero_hechos) as sum from crimes
+    most_frequent_crimes = pd.DataFrame(statement("""select delito, sum(numero_hechos) as sum from crimesall
                                                     group by delito
                                                     order by sum desc
                                                     limit 10
@@ -40,22 +41,54 @@ def most_frequent_crimes_():
     return fig
 
 def crimes_over_time_():
-    crimes_by_month = pd.DataFrame(statement("select date, sum(numero_hechos) as sum from crimes group by date"))
+    crimes_by_month = pd.DataFrame(statement("select fecha, sum(numero_hechos) as sum from crimesall group by fecha"))
     crimes_by_month.columns = ['date','crime ammount']
     crimes_by_month.set_index('date')
     fig = px.line(crimes_by_month, x='date', y="crime ammount")
     return fig
 
 def crimes_distribution_():
-    crimes_distribution = pd.DataFrame(statement("select localidad, sum(numero_hechos) as sum from crimes group by localidad"))
+    crimes_distribution = pd.DataFrame(statement("select localidad, sum(numero_hechos) as sum from crimesall group by localidad"))
     crimes_distribution.columns = ['localidad','crime ammount']
     crimes_distribution.set_index('localidad')
     fig = px.bar(crimes_distribution, x='localidad', y="crime ammount")
     return fig
 
 def gender_distribution_():
-    gender_distribution = pd.DataFrame(statement("select sexo, sum(numero_hechos) as sum from crimes group by sexo"))
+    gender_distribution = pd.DataFrame(statement("select sexo, sum(numero_hechos) as sum from crimesall group by sexo"))
     gender_distribution.columns = ['gender','crime ammount']
     gender_distribution.set_index('gender')
     fig = px.pie(gender_distribution, names='gender', values="crime ammount",color="crime ammount", color_discrete_sequence=px.colors.qualitative.G10)
     return fig
+
+def get_crimes_by_locality_year(year):
+    #crimes = pd.DataFrame(statement(f"""select localidad, sum(numero_hechos) as sum from crimesall
+                                    #where year = '{year}'
+                                    #group by localidad"""))
+    crimes = pd.DataFrame(statement(f"""WITH localidades(localidades) as (select localidad from crimesall group by localidad),
+	crimenes(localidades,numero_hechos) as (select localidad, sum(numero_hechos) as sum from crimesall where year = '{year}' group by localidad)
+select localidades.localidades, crimenes.numero_hechos from localidades
+left join crimenes on localidades.localidades = crimenes.localidades"""))
+    
+    
+    crimes.columns = ['localidad','numero hechos']
+    
+    crimes.localidad = [localidades[5:] for localidades in crimes.localidad]
+    crimes.fillna(0, inplace=True)
+    crimes['numero hechos'] = crimes['numero hechos'].astype(int)
+    
+    for i in range(len(crimes)):        
+        if crimes.localidad[i] != 'ANTONIO NARIÑO':
+            crimes.loc[i,'localidad'] = unidecode.unidecode(crimes.loc[i,'localidad'])
+    return crimes
+
+def most_affected_time_of_day():
+    crimes = pd.DataFrame(statement("""select rango_dia, sum(numero_hechos) as total from crimesall
+group by rango_dia
+order by total desc"""))
+    crimes.columns = ['rango_dia','numero_hechos']
+    crimes.set_index('rango_dia')
+    rango_dia = crimes.rango_dia[0]
+    crimes['porcentaje'] = (crimes.numero_hechos/crimes.numero_hechos.sum())*100
+    porcentaje = round(crimes.porcentaje[0],2)
+    return rango_dia,porcentaje

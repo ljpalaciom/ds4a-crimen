@@ -1,6 +1,7 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-
+from dao.dao_sql import most_affected_time_of_day
+time_of_day, porcentaje = most_affected_time_of_day()
 highest_crimes = dbc.Card(
     dbc.CardBody(
         [
@@ -19,7 +20,7 @@ affected_time_day = dbc.Card(
         [
             html.H1("Most Affected Time of day", className="card-title"),
             html.P(
-                "Morning (21%)",
+                f"{time_of_day} ({porcentaje}%)",
                 className="card-text",
             ),
         ]
