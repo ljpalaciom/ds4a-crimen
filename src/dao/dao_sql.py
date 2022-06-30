@@ -62,24 +62,21 @@ def gender_distribution_():
     return fig
 
 def get_crimes_by_locality_year(year):
-    #crimes = pd.DataFrame(statement(f"""select localidad, sum(numero_hechos) as sum from crimesall
-                                    #where year = '{year}'
-                                    #group by localidad"""))
     crimes = pd.DataFrame(statement(f"""WITH localidades(localidades) as (select localidad from crimesall group by localidad),
 	crimenes(localidades,numero_hechos) as (select localidad, sum(numero_hechos) as sum from crimesall where year = '{year}' group by localidad)
 select localidades.localidades, crimenes.numero_hechos from localidades
 left join crimenes on localidades.localidades = crimenes.localidades"""))
-    
     
     crimes.columns = ['localidad','numero hechos']
     
     crimes.localidad = [localidades[5:] for localidades in crimes.localidad]
     crimes.fillna(0, inplace=True)
     crimes['numero hechos'] = crimes['numero hechos'].astype(int)
-    
+
     for i in range(len(crimes)):        
         if crimes.localidad[i] != 'ANTONIO NARIÑO':
             crimes.loc[i,'localidad'] = unidecode.unidecode(crimes.loc[i,'localidad'])
+
     return crimes
 
 def most_affected_time_of_day():

@@ -4,11 +4,8 @@ import plotly.express as px
 import urllib.request, json
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, callback
-#from dao.dao_csv import get_crimes_by_locality_year
 from dao.dao_sql import get_crimes_by_locality_year
-# -- Import and clean data (importing csv into pandas)
-#with urllib.request.urlopen('https://datosabiertos.bogota.gov.co/dataset/856cb657-8ca3-4ee8-857f-37211173b1f8/resource/497b8756-0927-4aee-8da9-ca4e32ca3a8a/download/loca.geojson') as json_file:
-    #localidades = json.load(json_file)
+
 # ------------------------------------------------------------------------------
 with open('data/geojson/loca.geojson') as f:
     localidades = json.load(f)
@@ -36,17 +33,23 @@ map_layout = html.Div([
                  ),
     html.Div(id='output_container', children=[]),
     html.Br(),
-    dcc.Graph(id='my_bee_map', figure={})
+     dcc.Loading(
+            id="loading-1",
+            type="default",
+            children=html.Div(id="loading-output-1")
+        ),
+    dcc.Graph(id='my_bee_map')
 ])
-# ------------------------------------------------------------------------------
-# Connect the Plotly graphs with Dash Components
+
 @callback(
-    [Output(component_id='output_container', component_property='children'),
-     Output(component_id='my_bee_map', component_property='figure')],
-    [Input(component_id='slct_year', component_property='value')]
+    Output(component_id='output_container', component_property='children'),
+    Output(component_id='my_bee_map', component_property='figure'),
+    Output(component_id='loading-output-1', component_property='children'),
+    Input(component_id='slct_year', component_property='value')
 )
 def update_graph(option_slctd):
     container = "El año seleccionado fue: {}".format(option_slctd)
+    fig = None
     crimes_locality = get_crimes_by_locality_year(option_slctd)
     # Plotly Express
     fig = px.choropleth(crimes_locality,
@@ -60,4 +63,4 @@ def update_graph(option_slctd):
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, dragmode=False)
     
-    return container, fig
+    return container, fig, True
