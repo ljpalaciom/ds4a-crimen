@@ -36,9 +36,8 @@ map_layout = html.Div([
      dcc.Loading(
             id="loading-1",
             type="default",
-            children=html.Div(id="loading-output-1")
+            children=[html.Div(id="loading-output-1"), dcc.Graph(id='my_bee_map')]
         ),
-    dcc.Graph(id='my_bee_map')
 ])
 
 @callback(
@@ -48,7 +47,7 @@ map_layout = html.Div([
     Input(component_id='slct_year', component_property='value')
 )
 def update_graph(option_slctd):
-    container = "El año seleccionado fue: {}".format(option_slctd)
+    container = "Número Crimenes por localidad para el año: {}".format(option_slctd)
     fig = None
     crimes_locality = get_crimes_by_locality_year(option_slctd)
     # Plotly Express
