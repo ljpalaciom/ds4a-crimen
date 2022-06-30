@@ -5,10 +5,15 @@ import urllib.request, json
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, callback
 from dao.dao_sql import get_crimes_by_locality_year
+import os
 
-# ------------------------------------------------------------------------------
+file_path = os.path.dirname(__file__)
+rel_path = "../../data/geojson/loca.geojson" 
+path = os.path.join(file_path, rel_path)
 with open('data/geojson/loca.geojson') as f:
     localidades = json.load(f)
+
+    
 # App layout
 map_layout = html.Div([
     html.H4(id='output_container', children=[]),
