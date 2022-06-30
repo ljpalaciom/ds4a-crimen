@@ -1,3 +1,7 @@
+#main-container {
+    background-color: #EFEFF1;
+}
+
 .row {
     margin: 20px 0;
 }
@@ -12,6 +16,10 @@
 
 .nav-icon {
     margin-right: 10px;
+}
+
+.header-section .card{
+    height: 180px;
 }
 
 #exploratory .card-title {
@@ -30,4 +38,17 @@
 #crimes_map {
     border: 1px solid black;
     text-align: center;
+}
+
+.prediction-link{
+    background-color: #0dcaf0;
+}
+
+.prediction-link i{
+    margin-left: 5px;
+}
+
+.prediction-link a, a:hover{
+    color: white;  
+    text-decoration: none;   
 }

@@ -11,6 +11,7 @@ with open('data/geojson/loca.geojson') as f:
     localidades = json.load(f)
 # App layout
 map_layout = html.Div([
+    html.H4(id='output_container', children=[]),
     html.P('Seleccione el año que desea consultar:'),
     dcc.Dropdown(id="slct_year",
                  options=[
@@ -31,7 +32,6 @@ map_layout = html.Div([
                  value=2010,
                  style={'width': "40%"}
                  ),
-    html.Div(id='output_container', children=[]),
     html.Br(),
      dcc.Loading(
             id="loading-1",

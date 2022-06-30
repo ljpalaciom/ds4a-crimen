@@ -10,20 +10,12 @@ from pages.exploratory.crimes_distribution import crimes_distribution_layout
 from pages.exploratory.gender_distribution import gender_distribution_layout
 
 layout = html.Div([
-   # dash_table.DataTable(crimes.head().to_dict('records'), [{"name": i, "id": i} for i in crimes.columns]),
-   dbc.CardGroup(
-            [
-                highest_crimes,
-                affected_time_day,
-                trending_felonies,
-            ],
-            id="summary-header"
-        ),
-    dbc.Row(dbc.Col(map_layout)),
     dbc.Row([
-        dbc.Col(report_crime_layout, lg=4),
-        dbc.Col(predictive_model_layout, lg={"size": 4, "offset": 4})
+        dbc.Col(highest_crimes, lg={"size": 4}, className="header-section"),
+        dbc.Col(affected_time_day, lg={"size": 4}, className="header-section"),
+        dbc.Col(trending_felonies, lg={"size": 4}, className="header-section"),
         ], align="center"),
+    dbc.Row(dbc.Col(map_layout)),
     dbc.Row([
         dbc.Col(crimes_over_time_layout, lg={"size": 6}),
         dbc.Col(most_frequent_crimes_layout, lg={"size": 6}),
@@ -32,4 +24,7 @@ layout = html.Div([
         dbc.Col(crimes_distribution_layout, lg={"size": 6}),
         dbc.Col(gender_distribution_layout, lg={"size": 6}),
         ], align="center"),
+    dbc.Row([
+        dbc.Col(predictive_model_layout, lg={"size": 4, "offset": 8})
+        ], align="center"),    
 ], id="exploratory")
