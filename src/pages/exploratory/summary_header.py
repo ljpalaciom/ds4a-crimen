@@ -32,6 +32,7 @@ highest_crimes = dbc.Card(
                         {"label": "CIUDAD BOLÍVAR", "value": "19 - CIUDAD BOLÍVAR"},
                         {"label": "SUMAPAZ", "value": "20 - SUMAPAZ"}],
                  multi=False,
+                 clearable=False,
                  value="01 - USAQUÉN",
                  style={'width': "60%", 'margin-left': 'auto', 'margin-right': 'auto', 'margin-top': '10px', 'margin-bottom': '10px'},
                  ),
