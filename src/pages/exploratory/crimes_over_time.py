@@ -7,7 +7,7 @@ fig = crimes_over_time_()
 crimes_over_time_layout = dbc.Card(
     dbc.CardBody(
         [
-            html.H2("Crime ammount over time ", className="card-title"),
+            html.H2("Numero de crimenes en el tiempo", className="card-title"),
             dcc.Graph(figure=fig)
         ]
     )

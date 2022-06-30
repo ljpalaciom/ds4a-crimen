@@ -5,7 +5,7 @@ fig = gender_distribution_()
 gender_distribution_layout = dbc.Card(
     dbc.CardBody(
         [
-            html.H2("Victims gender distribution by crime", className="card-title"),
+            html.H2("Distribución por sexo de las víctimas", className="card-title"),
             dcc.Graph(figure=fig)
         ]
     )
