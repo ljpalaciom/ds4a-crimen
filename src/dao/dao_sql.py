@@ -1,4 +1,5 @@
 import os
+from xml.dom.minidom import TypeInfo
 import numpy as np
 import psycopg2
 from dotenv import load_dotenv
@@ -40,8 +41,12 @@ def most_frequent_crimes_():
     fig = px.pie(most_frequent_crimes, names= 'crime', values='crime ammount')
     return fig
 
-def crimes_over_time_():
-    crimes_by_month = pd.DataFrame(statement("select fecha, sum(numero_hechos) as sum from crimesall group by fecha"))
+def crimes_over_time_(start_date, end_date):
+    crimes_by_month = pd.DataFrame(statement(f"""
+    SELECT fecha, SUM(numero_hechos) as sum FROM crimesall
+    WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
+    GROUP BY fecha
+    """))
     crimes_by_month.columns = ['date','crime ammount']
     crimes_by_month.set_index('date')
     fig = px.line(crimes_by_month, x='date', y="crime ammount")
@@ -89,3 +94,18 @@ order by total desc"""))
     crimes['porcentaje'] = (crimes.numero_hechos/crimes.numero_hechos.sum())*100
     porcentaje = round(crimes.porcentaje[0],2)
     return rango_dia,porcentaje
+
+
+def min_date():
+    min = statement("""
+     SELECT MIN(fecha) FROM crimesall;
+    """
+    )[0][0]
+    return min
+
+def max_date():
+    max = statement("""
+     SELECT MAX(fecha) FROM crimesall;
+    """
+    )[0][0]
+    return max
