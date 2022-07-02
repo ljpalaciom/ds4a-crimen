@@ -9,7 +9,7 @@ max_date = max_date()
 crimes_over_time_layout = dbc.Card(
     dbc.CardBody(
         [
-            html.H2("Serie de tiempo número de crimenes en el tiempo", className="card-title"),
+            html.H2("Serie de tiempo número de crimenes", className="card-title"),
             dcc.DatePickerRange(
                 id='my-date-picker-range',
                 min_date_allowed=min_date,
