@@ -1,8 +1,11 @@
 from dash import dcc, html,Input, Output, callback
 import dash_bootstrap_components as dbc
 from dao.dao_sql import most_affected_time_of_day, highest_predicted_crimes,top_trending,mes
+
 time_of_day, porcentaje = most_affected_time_of_day()
 top1,top2,top3 = top_trending()
+
+
 highest_crimes = dbc.Card(
     dbc.CardBody(
         [   

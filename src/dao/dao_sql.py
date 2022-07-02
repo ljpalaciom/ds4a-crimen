@@ -65,7 +65,11 @@ def crimes_over_time_month(start_date, end_date):
     return fig
 
 def crimes_distribution_():
-    crimes_distribution = pd.DataFrame(statement("select localidad, sum(numero_hechos) as sum from crimesall group by localidad"))
+    crimes_distribution = pd.DataFrame(statement("""
+    select localidad, sum(numero_hechos) as sum from crimesall group by localidad 
+    ORDER BY sum DESC
+    """
+    ))
     crimes_distribution.columns = ['localidad','crime ammount']
     crimes_distribution.set_index('localidad')
     fig = px.bar(crimes_distribution, x='localidad', y="crime ammount")
@@ -97,9 +101,10 @@ def get_crimes_by_locality_year(year):
     return crimes
 
 def most_affected_time_of_day():
-    crimes = pd.DataFrame(statement("""select rango_dia, sum(numero_hechos) as total from crimesall
-group by rango_dia
-order by total desc"""))
+    crimes = pd.DataFrame(statement("""
+    select rango_dia, sum(numero_hechos) as total from crimesall
+    group by rango_dia
+    order by total desc"""))
     crimes.columns = ['rango_dia','numero_hechos']
     crimes.set_index('rango_dia')
     rango_dia = crimes.rango_dia[0]
@@ -136,17 +141,20 @@ order by total desc"""))
 
 def top_trending():
     mes = date.today().month
-    top_trending = pd.DataFrame(statement(f"""select localidad, delito, nro_mes ,sum(numero_hechos) as total from crimesall
-where nro_mes = '{mes}'
-group by localidad, delito, nro_mes
-order by total desc
-limit 3"""))
+    top_trending = pd.DataFrame(statement(f"""
+    select localidad, delito, nro_mes ,sum(numero_hechos) as total from crimesall
+    where nro_mes = '{mes}'
+    group by localidad, delito, nro_mes
+    order by total desc
+    limit 3"""))
     top_trending.columns = ['localidad','delito','nro mes','crime ammount']
     top_trending.localidad = [localidades[5:] for localidades in top_trending.localidad]    
     data1 = f"{top_trending.delito[0]} en {top_trending.localidad[0]}"
     data2 = f"{top_trending.delito[1]} en {top_trending.localidad[1]}"
     data3 = f"{top_trending.delito[2]} en {top_trending.localidad[2]}"
     return data1,data2,data3
+
+
 def mes ():
     mes = date.today().month
     mesesDic = {
