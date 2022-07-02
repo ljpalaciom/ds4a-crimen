@@ -20,8 +20,6 @@ map_layout = html.Div([
     html.P('Seleccione el año que desea consultar:'),
     dcc.Dropdown(id="slct_year",
                  options=[
-                     {"label": "2010", "value": 2010},
-                     {"label": "2011", "value": 2011},
                      {"label": "2012", "value": 2012},
                      {"label": "2013", "value": 2013},
                      {"label": "2014", "value": 2014},
@@ -35,7 +33,7 @@ map_layout = html.Div([
                      {"label": "2022", "value": 2022}],
                  multi=False,
                  clearable=False,
-                 value=2010,
+                 value=2012,
                  style={'width': "40%"}
                  ),
     html.Br(),

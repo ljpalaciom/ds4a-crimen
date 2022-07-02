@@ -41,15 +41,27 @@ def most_frequent_crimes_():
     fig = px.pie(most_frequent_crimes, names= 'crime', values='crime ammount')
     return fig
 
-def crimes_over_time_(start_date, end_date):
-    crimes_by_month = pd.DataFrame(statement(f"""
+def crimes_over_time_day(start_date, end_date):
+    crimes_by_day = pd.DataFrame(statement(f"""
     SELECT fecha, SUM(numero_hechos) as sum FROM crimesall
     WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
     GROUP BY fecha
     """))
-    crimes_by_month.columns = ['date','crime ammount']
-    crimes_by_month.set_index('date')
-    fig = px.line(crimes_by_month, x='date', y="crime ammount")
+    crimes_by_day.columns = ['date','crime ammount']
+    crimes_by_day.set_index('date')
+    fig = px.line(crimes_by_day, x='date', y="crime ammount")
+    return fig
+
+
+def crimes_over_time_month(start_date, end_date):
+    crimes_by_day = pd.DataFrame(statement(f"""
+    SELECT DATE_TRUNC('month', fecha), SUM(numero_hechos) as sum FROM crimesall
+    WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
+    GROUP BY DATE_TRUNC('month', fecha)
+    """))
+    crimes_by_day.columns = ['date','crime ammount']
+    crimes_by_day.set_index('date')
+    fig = px.line(crimes_by_day, x='date', y="crime ammount")
     return fig
 
 def crimes_distribution_():
@@ -109,7 +121,7 @@ def max_date():
     """
     )[0][0]
     return max
-    
+
 def highest_predicted_crimes(localidad):
     crimes = pd.DataFrame(statement(f"""select localidad , delito ,sum(numero_hechos) as total from crimesall
 where localidad = '{localidad}'
