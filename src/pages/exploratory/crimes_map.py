@@ -34,6 +34,7 @@ map_layout = html.Div([
                      {"label": "2021", "value": 2021},
                      {"label": "2022", "value": 2022}],
                  multi=False,
+                 clearable=False,
                  value=2010,
                  style={'width': "40%"}
                  ),

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import pandas as pd
 import plotly.express as px
 import unidecode
-
+from datetime import date
 def postgres_connect():
     load_dotenv()
     host_db = os.getenv('POSTGRES_ADDRESS')
@@ -67,11 +67,11 @@ def gender_distribution_():
     return fig
 
 def get_crimes_by_locality_year(year):
-    crimes = pd.DataFrame(statement(f"""WITH localidades(localidades) as (select localidad from crimesall group by localidad),
-	crimenes(localidades,numero_hechos) as (select localidad, sum(numero_hechos) as sum from crimesall where year = '{year}' group by localidad)
-select localidades.localidades, crimenes.numero_hechos from localidades
-left join crimenes on localidades.localidades = crimenes.localidades"""))
-    
+    #crimes = pd.DataFrame(statement(f"""WITH localidades(localidades) as (select localidad from crimesall group by localidad),
+	#crimenes(localidades,numero_hechos) as (select localidad, sum(numero_hechos) as sum from crimesall where year = '{year}' group by localidad)
+#select localidades.localidades, crimenes.numero_hechos from localidades
+#left join crimenes on localidades.localidades = crimenes.localidades"""))
+    crimes = pd.DataFrame(statement(f"""select * from mapa{year}"""))    
     crimes.columns = ['localidad','numero hechos']
     
     crimes.localidad = [localidades[5:] for localidades in crimes.localidad]
@@ -109,3 +109,46 @@ def max_date():
     """
     )[0][0]
     return max
+    
+def highest_predicted_crimes(localidad):
+    crimes = pd.DataFrame(statement(f"""select localidad , delito ,sum(numero_hechos) as total from crimesall
+where localidad = '{localidad}'
+group by localidad, delito
+order by total desc"""))
+    crimes.columns = ['localidad','delito','numero_hechos']
+    crimes['porcentaje'] = (crimes.numero_hechos/crimes.numero_hechos.sum())*100
+    porcentaje = round(crimes.porcentaje[0],2)
+    localidades = crimes.localidad[0][5:]
+    delito = crimes.delito[0]
+    return localidades,delito,porcentaje
+
+def top_trending():
+    mes = date.today().month
+    top_trending = pd.DataFrame(statement(f"""select localidad, delito, nro_mes ,sum(numero_hechos) as total from crimesall
+where nro_mes = '{mes}'
+group by localidad, delito, nro_mes
+order by total desc
+limit 3"""))
+    top_trending.columns = ['localidad','delito','nro mes','crime ammount']
+    top_trending.localidad = [localidades[5:] for localidades in top_trending.localidad]    
+    data1 = f"{top_trending.delito[0]} en {top_trending.localidad[0]}"
+    data2 = f"{top_trending.delito[1]} en {top_trending.localidad[1]}"
+    data3 = f"{top_trending.delito[2]} en {top_trending.localidad[2]}"
+    return data1,data2,data3
+def mes ():
+    mes = date.today().month
+    mesesDic = {
+    "1":'Enero',
+    "2":'Febrero',
+    "3":'Marzo',
+    "4":'Abril',
+    "5":'Mayo',
+    "6":'Junio',
+    "7":'Julio',
+    "8":'Agosto',
+    "9":'Septiembre',
+    "10":'Octubre',
+    "11":'Noviembre',
+    "12":'Diciembre'
+}
+    return mesesDic[str(mes)]
