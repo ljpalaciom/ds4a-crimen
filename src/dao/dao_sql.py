@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.express as px
 import unidecode
 from datetime import date
+
 def postgres_connect():
     load_dotenv()
     host_db = os.getenv('POSTGRES_ADDRESS')
@@ -83,10 +84,6 @@ def gender_distribution_():
     return fig
 
 def get_crimes_by_locality_year(year):
-    #crimes = pd.DataFrame(statement(f"""WITH localidades(localidades) as (select localidad from crimesall group by localidad),
-	#crimenes(localidades,numero_hechos) as (select localidad, sum(numero_hechos) as sum from crimesall where year = '{year}' group by localidad)
-#select localidades.localidades, crimenes.numero_hechos from localidades
-#left join crimenes on localidades.localidades = crimenes.localidades"""))
     crimes = pd.DataFrame(statement(f"""select * from mapa{year}"""))    
     crimes.columns = ['localidad','numero hechos']
     
@@ -172,3 +169,53 @@ def mes ():
     "12":'Diciembre'
 }
     return mesesDic[str(mes)]
+
+
+def localidades():
+    localidades = pd.DataFrame(statement(f"""
+    SELECT distinct(localidad)
+    FROM crimesall
+    """))
+    return localidades[0].values
+
+
+def weapon_use(localidad=None):
+    weapon_use = pd.DataFrame(statement(f"""
+    SELECT arma, sexo, SUM(numero_hechos) as total FROM crimesall
+    {f"WHERE localidad = '{localidad}'" if localidad else ' '}
+    GROUP BY arma, sexo
+    ORDER BY total DESC
+    LIMIT 10;
+    """))
+    weapon_use.columns = ["arma", "Sexo Victima", 'total']
+    weapon_use.set_index('arma')
+    fig = px.bar(
+        weapon_use,
+        x="arma",
+        y="total",
+        color="Sexo Victima"
+    )
+    return fig
+
+
+def top_weapons():
+    top_weapons = pd.DataFrame(statement(f"""
+    SELECT arma, SUM(numero_hechos) AS total FROM crimesall
+    GROUP BY arma
+    ORDER by total DESC
+    LIMIT 10;
+    """))
+    top_weapons.columns = ["arma", 'total']
+    top_weapons_list = top_weapons['arma'].values
+    return top_weapons_list
+
+def crime_by_weapon(weapon):
+    crime_by_weapon = pd.DataFrame(statement(f"""
+    SELECT delito, SUM(numero_hechos) AS total FROM crimesall
+    WHERE arma = '{weapon}'
+    GROUP BY arma, delito
+    ORDER by total DESC
+    LIMIT 10;
+    """))
+    crime_by_weapon.columns = ["delito", 'total']
+    return crime_by_weapon
