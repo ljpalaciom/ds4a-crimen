@@ -56,3 +56,9 @@
 .radio_group label{
     margin-right: 10px;
 }
+
+.participant {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+}

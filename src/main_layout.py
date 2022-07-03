@@ -5,6 +5,8 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink([html.I(className="bi bi-graph-up nav-icon"), "Análisis exploratorio"], href="/"), className="nav-item"),
         dbc.NavItem(dbc.NavLink([html.I(className="bi bi-graph-up-arrow nav-icon"), "Predicción de crimenes"], href="/prediction"), className="nav-item"),
+        dbc.NavItem(dbc.NavLink([html.I(className="ml-2"), "Quienes Somos"], href="/about-us"), className="nav-item"),
+
     ],
     brand="Crimenes en la ciudad de Bogotá - Team 234",
     brand_href="/",
