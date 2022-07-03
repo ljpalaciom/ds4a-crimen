@@ -5,6 +5,7 @@ from pages.prediction import page as prediction_page
 import main_layout
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.BOOTSTRAP,  dbc.icons.FONT_AWESOME], suppress_callback_exceptions=True)
+app.title = "DS4a Crime Dashboard - Team 234"
 
 server = app.server
 
