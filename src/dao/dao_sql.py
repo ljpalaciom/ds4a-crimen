@@ -222,14 +222,14 @@ def crime_by_weapon(weapon):
 
 def crimes_vs_population(yr=2015):
     crimes = pd.DataFrame(statement(f"""
-    SELECT year, localidad, numero_hechos, poblacion FROM crimesallpopulation;
+    SELECT  localidad, poblacion, SUM(numero_hechos) AS total FROM crimesallpopulation
+    WHERE year = {yr}
+    GROUP BY localidad, poblacion
     """))
-    crimes.columns = ["year", "localidad", 'numero hechos', 'Población']
-    grup2 = crimes[crimes['year']==yr][['localidad','numero hechos','Población']]
-    grup3 = grup2.groupby(['localidad','Población'], as_index =False)['numero hechos'].sum().reset_index()
-    #.sort_values('numero hechos', ascending =False)
-    grup3['hectáreas'] = [488, 1190, 2394,1830,3801,13000, 3588.1, 3328, 3800, 651, 1731,1344, 4909, 4510, 10056, 78095, 1421, 991, 6550, 21506]
-    fig = px.scatter(grup3, x="Población", y="numero hechos",
+    crimes.columns = ['localidad', 'Población', 'numero hechos']
+    crimes['hectáreas'] = [488, 1190, 2394,1830,3801,13000, 3588.1, 3328, 3800, 651, 1731,1344, 4909, 4510, 10056, 78095, 1421, 991, 6550, 21506]
+    print(crimes)
+    fig = px.scatter(crimes, x="Población", y="numero hechos",
                     size='hectáreas', hover_name="localidad", 
                     color = 'localidad',color_discrete_sequence=px.colors.sequential.Plasma_r, log_x=True, size_max=60,
                     labels={"Población":"Population","numero hechos":"Number of crimes","localidad": "Locality"},
