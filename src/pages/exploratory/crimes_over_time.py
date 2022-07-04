@@ -30,7 +30,7 @@ crimes_over_time_layout = dbc.Card(
             dcc.Loading(
                 id="loading",
                 type="default",
-                children=[html.Div(id="loading-output"), dcc.Graph(id="fig")]
+                children=[html.Div(id="loading-time-series"), dcc.Graph(id="fig")]
             )
         ]
     )
@@ -38,7 +38,7 @@ crimes_over_time_layout = dbc.Card(
 
 @callback(
     Output('fig', 'figure'),
-    Output('loading-output','children'),
+    Output('loading-time-series','children'),
     Input('group-by', 'value'),
     Input('my-date-picker-range', 'start_date'),
     Input('my-date-picker-range', 'end_date'))

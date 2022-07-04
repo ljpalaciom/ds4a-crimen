@@ -9,14 +9,19 @@ from pages.exploratory.most_frequent_crimes import most_frequent_crimes_layout
 from pages.exploratory.crimes_distribution import crimes_distribution_layout
 from pages.exploratory.gender_distribution import gender_distribution_layout
 from pages.exploratory.weapon_analisys import weapon_layout
+from pages.exploratory.page_intro import page_intro_layout
+from pages.exploratory.crimes_vs_population import crimes_vs_population_layout
 
 layout = html.Div([
+    dbc.Row([
+        page_intro_layout
+        ], align="center"),
     dbc.Row([
         dbc.Col(highest_crimes, lg={"size": 4}, className="header-section"),
         dbc.Col(affected_time_day, lg={"size": 4}, className="header-section"),
         dbc.Col(trending_felonies, lg={"size": 4}, className="header-section"),
-        ], align="center"),
-    dbc.Row(dbc.Col(map_layout)),
+        ], align="center" ,className="mt-5"),
+    dbc.Row(dbc.Col(map_layout),className="mt-5"),
     dbc.Row([
         dbc.Col(crimes_over_time_layout, lg={"size": 12}),
         ], align="center"),
@@ -24,10 +29,11 @@ layout = html.Div([
         dbc.Col(crimes_distribution_layout, lg={"size": 6}),
         dbc.Col(gender_distribution_layout, lg={"size": 6}),
         dbc.Col(most_frequent_crimes_layout, lg={"size": 6}, className="mt-5"),
-        ], align="center", justify="center"),
+        dbc.Col(crimes_vs_population_layout, lg={"size": 6}, className="mt-5"),
+        ], align="center", justify="center", className="mt-5 mb-5"),
     dbc.Row([
         dbc.Col(weapon_layout, lg={"size": 12}),
-        ], align="center"),
+        ], align="center",className="mt-5"),
     # dbc.Row([
     #     dbc.Col(predictive_model_layout, lg={"size": 4, "offset": 8})
     #     ], align="center"),    

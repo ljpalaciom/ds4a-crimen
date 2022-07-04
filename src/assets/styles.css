@@ -1,9 +1,34 @@
-#main-container {
+
+
+#exploratory {
     background-color: #EFEFF1;
 }
 
-.row {
-    margin: 20px 0;
+#home {
+    display: flex;
+    align-items: center;
+    min-height: 85vh;
+}
+
+#home .page-link {
+    background-color: #4930E8;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+#home .page-link .title {
+    margin-right: 10px;
+}
+
+#home .page-link:hover {
+    opacity: 0.8;
+}
+
+#home .reference {
+    font-size: 0.8rem;
+    margin: 0;
 }
 
 .nav-item .nav-link {
@@ -19,7 +44,11 @@
 }
 
 .header-section .card{
-    height: 180px;
+    min-height: 180px;
+}
+
+#exploratory .page-intro {
+    background-color: white;
 }
 
 #exploratory .card-title {
@@ -61,4 +90,74 @@
     background-color: white;
     padding: 20px;
     margin-top: 20px;
+}
+
+.facts-title{
+    color: #8475F0;
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.fact {
+    position: relative;
+    min-height: 115px;
+    margin: 20px 0;
+}
+
+.fact--purple {
+    background-color: #757FFE;
+    color: white;
+}
+
+.fact--purple .number {
+    background-color: #3540D5;
+}
+
+.fact--yellow {
+    background-color: #F8D81C;
+    color: black;
+}
+
+.fact--yellow .number {
+    background-color: #E4C301;
+    color: white;
+}
+
+.fact--green {
+    background-color: #98F28F;
+    color: black;
+}
+
+.fact--green .number {
+    background-color: #7EE174;
+    color: white;
+}
+
+.fact .row {
+    min-height: 100px;
+}
+
+.fact::before {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+}
+
+.fact .description {
+    font-weight: bold;
+}
+
+.fact .number {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 80px;
+    height: 100px;
+    transform: skew(20deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2rem;
 }
