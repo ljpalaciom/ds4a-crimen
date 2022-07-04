@@ -1,4 +1,31 @@
-#main-container {
+#home {
+    display: flex;
+    align-items: center;
+    min-height: 85vh;
+}
+
+#home .page-link {
+    background-color: #4930E8;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+#home .page-link .title {
+    margin-right: 10px;
+}
+
+#home .page-link:hover {
+    opacity: 0.8;
+}
+
+#home .reference {
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+#exploratory {
     background-color: #EFEFF1;
 }
 
@@ -19,7 +46,7 @@
 }
 
 .header-section .card{
-    height: 180px;
+    min-height: 180px;
 }
 
 #exploratory .card-title {
