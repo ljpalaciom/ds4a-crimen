@@ -31,9 +31,9 @@ layout = html.Div([
         dbc.Col(most_frequent_crimes_layout, lg={"size": 6}, className="mt-5"),
         dbc.Col(crimes_vs_population_layout, lg={"size": 6}, className="mt-5"),
         ], align="center", justify="center", className="mt-5 mb-5"),
-    dbc.Row([
-        dbc.Col(weapon_layout, lg={"size": 12}),
-        ], align="center",className="mt-5"),
+    # dbc.Row([
+    #     dbc.Col(weapon_layout, lg={"size": 12}),
+    #     ], align="center",className="mt-5"),
     # dbc.Row([
     #     dbc.Col(predictive_model_layout, lg={"size": 4, "offset": 8})
     #     ], align="center"),    
