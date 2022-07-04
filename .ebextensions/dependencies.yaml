@@ -1,5 +1,6 @@
 packages: 
   yum:
     gcc: [] 
+    python-setuptools: []
     python-devel: []
     postgresql-devel: []
