@@ -32,7 +32,7 @@ def statement(sql_query):
     return db_version
 
 def most_frequent_crimes_():
-    most_frequent_crimes = pd.DataFrame(statement("""select delito, sum(numero_hechos) as sum from crimesall
+    most_frequent_crimes = pd.DataFrame(statement("""select delito, sum(numero_hechos) as sum from crimesallpopulation
                                                     group by delito
                                                     order by sum desc
                                                     limit 10
@@ -44,7 +44,7 @@ def most_frequent_crimes_():
 
 def crimes_over_time_day(start_date, end_date):
     crimes_by_day = pd.DataFrame(statement(f"""
-    SELECT fecha, SUM(numero_hechos) as sum FROM crimesall
+    SELECT fecha, SUM(numero_hechos) as sum FROM crimesallpopulation
     WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
     GROUP BY fecha
     """))
@@ -67,7 +67,7 @@ def crimes_over_time_month(start_date, end_date):
 
 def crimes_distribution_():
     crimes_distribution = pd.DataFrame(statement("""
-    select localidad, sum(numero_hechos) as sum from crimesall group by localidad 
+    select localidad, sum(numero_hechos) as sum from crimesallpopulation group by localidad 
     ORDER BY sum DESC
     """
     ))
@@ -77,7 +77,7 @@ def crimes_distribution_():
     return fig
 
 def gender_distribution_():
-    gender_distribution = pd.DataFrame(statement("select sexo, sum(numero_hechos) as sum from crimesall group by sexo"))
+    gender_distribution = pd.DataFrame(statement("select sexo, sum(numero_hechos) as sum from crimesallpopulation group by sexo"))
     gender_distribution.columns = ['gender','crime ammount']
     gender_distribution.set_index('gender')
     fig = px.pie(gender_distribution, names='gender', values="crime ammount",color="crime ammount", color_discrete_sequence=px.colors.qualitative.G10)
@@ -99,7 +99,7 @@ def get_crimes_by_locality_year(year):
 
 def most_affected_time_of_day():
     crimes = pd.DataFrame(statement("""
-    select rango_dia, sum(numero_hechos) as total from crimesall
+    select rango_dia, sum(numero_hechos) as total from crimesallpopulation
     group by rango_dia
     order by total desc"""))
     crimes.columns = ['rango_dia','numero_hechos']
@@ -125,27 +125,26 @@ def max_date():
     return max
 
 def highest_predicted_crimes(localidad):
-    crimes = pd.DataFrame(statement(f"""select localidad , delito ,sum(numero_hechos) as total from crimesall
+    crimes = pd.DataFrame(statement(f"""select localidad , delito ,sum(numero_hechos) as total from crimesallpopulation
 where localidad = '{localidad}'
 group by localidad, delito
 order by total desc"""))
     crimes.columns = ['localidad','delito','numero_hechos']
     crimes['porcentaje'] = (crimes.numero_hechos/crimes.numero_hechos.sum())*100
     porcentaje = round(crimes.porcentaje[0],2)
-    localidades = crimes.localidad[0][5:]
     delito = crimes.delito[0]
-    return localidades,delito,porcentaje
+    return delito,porcentaje
 
 def top_trending():
     mes = date.today().month
     top_trending = pd.DataFrame(statement(f"""
-    select localidad, delito, nro_mes ,sum(numero_hechos) as total from crimesall
+    select localidad, delito, nro_mes ,sum(numero_hechos) as total from crimesallpopulation
     where nro_mes = '{mes}'
     group by localidad, delito, nro_mes
     order by total desc
     limit 3"""))
     top_trending.columns = ['localidad','delito','nro mes','crime ammount']
-    top_trending.localidad = [localidades[5:] for localidades in top_trending.localidad]    
+    top_trending.localidad = [localidades for localidades in top_trending.localidad]    
     data1 = f"{top_trending.delito[0]} en {top_trending.localidad[0]}"
     data2 = f"{top_trending.delito[1]} en {top_trending.localidad[1]}"
     data3 = f"{top_trending.delito[2]} en {top_trending.localidad[2]}"
@@ -174,14 +173,14 @@ def mes ():
 def localidades():
     localidades = pd.DataFrame(statement(f"""
     SELECT distinct(localidad)
-    FROM crimesall
+    FROM crimesallpopulation
     """))
     return localidades[0].values
 
 
 def weapon_use(localidad=None):
     weapon_use = pd.DataFrame(statement(f"""
-    SELECT arma, sexo, SUM(numero_hechos) as total FROM crimesall
+    SELECT arma, sexo, SUM(numero_hechos) as total FROM crimesallpopulation
     {f"WHERE localidad = '{localidad}'" if localidad else ' '}
     GROUP BY arma, sexo
     ORDER BY total DESC
@@ -200,7 +199,7 @@ def weapon_use(localidad=None):
 
 def top_weapons():
     top_weapons = pd.DataFrame(statement(f"""
-    SELECT arma, SUM(numero_hechos) AS total FROM crimesall
+    SELECT arma, SUM(numero_hechos) AS total FROM crimesallpopulation
     GROUP BY arma
     ORDER by total DESC
     LIMIT 10;
@@ -211,7 +210,7 @@ def top_weapons():
 
 def crime_by_weapon(weapon):
     crime_by_weapon = pd.DataFrame(statement(f"""
-    SELECT delito, SUM(numero_hechos) AS total FROM crimesall
+    SELECT delito, SUM(numero_hechos) AS total FROM crimesallpopulation
     WHERE arma = '{weapon}'
     GROUP BY arma, delito
     ORDER by total DESC
@@ -219,3 +218,20 @@ def crime_by_weapon(weapon):
     """))
     crime_by_weapon.columns = ["delito", 'total']
     return crime_by_weapon
+
+
+def crimes_vs_population(yr=2015):
+    crimes = pd.DataFrame(statement(f"""
+    SELECT year, localidad, numero_hechos, poblacion FROM crimesallpopulation;
+    """))
+    crimes.columns = ["year", "localidad", 'numero hechos', 'Población']
+    grup2 = crimes[crimes['year']==yr][['localidad','numero hechos','Población']]
+    grup3 = grup2.groupby(['localidad','Población'], as_index =False)['numero hechos'].sum().reset_index()
+    #.sort_values('numero hechos', ascending =False)
+    grup3['hectáreas'] = [488, 1190, 2394,1830,3801,13000, 3588.1, 3328, 3800, 651, 1731,1344, 4909, 4510, 10056, 78095, 1421, 991, 6550, 21506]
+    fig = px.scatter(grup3, x="Población", y="numero hechos",
+                    size='hectáreas', hover_name="localidad", 
+                    color = 'localidad',color_discrete_sequence=px.colors.sequential.Plasma_r, log_x=True, size_max=60,
+                    labels={"Población":"Population","numero hechos":"Number of crimes","localidad": "Locality"},
+                    title="Número de crimenes vs Población por localidad-"+str(yr))
+    return fig

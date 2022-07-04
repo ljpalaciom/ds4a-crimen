@@ -10,6 +10,7 @@ from pages.exploratory.crimes_distribution import crimes_distribution_layout
 from pages.exploratory.gender_distribution import gender_distribution_layout
 from pages.exploratory.weapon_analisys import weapon_layout
 from pages.exploratory.page_intro import page_intro_layout
+from pages.exploratory.crimes_vs_population import crimes_vs_population_layout
 
 layout = html.Div([
     dbc.Row([
@@ -28,6 +29,7 @@ layout = html.Div([
         dbc.Col(crimes_distribution_layout, lg={"size": 6}),
         dbc.Col(gender_distribution_layout, lg={"size": 6}),
         dbc.Col(most_frequent_crimes_layout, lg={"size": 6}, className="mt-5"),
+        dbc.Col(crimes_vs_population_layout, lg={"size": 6}, className="mt-5"),
         ], align="center", justify="center", className="mt-5 mb-5"),
     dbc.Row([
         dbc.Col(weapon_layout, lg={"size": 12}),
