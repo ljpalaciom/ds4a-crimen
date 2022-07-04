@@ -9,7 +9,7 @@ layout = html.Div([
             dbc.Col([
                 html.P(["En el último año la percepción de inseguridad de los bogotanos ha sido la más alta en 6 años.  En 2021, el indicador de percepción de inseguridad en la ciudad se estimó en un 88%",html.Sup(1)]),
                 html.P([
-                    "Con cerca de 8 millones de habitantes y más de 1.7 millones de turitas que visitan la ciudad cada año2",
+                    "Con cerca de 8 millones de habitantes y más de 1.7 millones de turitas que visitan la ciudad cada año",
                     html.Sup("2"),
                     html.Span(" ,la seguridad en la ciudad es un desafío que requiere ser analizado con detalle.")
                     ]
