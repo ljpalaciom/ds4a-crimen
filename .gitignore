@@ -2,9 +2,10 @@ venv
 *.pyc
 .DS_Store
 .env
-
+ds4a-env
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 ds4a-crimen.code-workspace
+.vscode/

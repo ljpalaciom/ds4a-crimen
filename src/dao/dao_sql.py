@@ -24,12 +24,20 @@ def postgres_connect():
         return cur
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
+
 def statement(sql_query):
     cur = postgres_connect()
     cur.execute(sql_query)
     db_version = cur.fetchall()
     cur.close()
     return db_version
+
+def max_date():
+    max = statement("""
+     SELECT MAX(fecha) FROM crimesall;
+    """
+    )[0][0]
+    return max
 
 def most_frequent_crimes_():
     most_frequent_crimes = pd.DataFrame(statement("""select delito, sum(numero_hechos) as sum from crimesallpopulation
@@ -53,6 +61,24 @@ def crimes_over_time_day(start_date, end_date):
     fig = px.line(crimes_by_day, x='date', y="crime ammount")
     return fig
 
+def crimes_over_time_day_data(start_date, end_date):
+    crimes_by_day = pd.DataFrame(statement(f"""
+    SELECT fecha, SUM(numero_hechos) as sum FROM crimesallpopulation
+    WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
+    GROUP BY fecha
+    """))
+    crimes_by_day.columns = ['date','crime ammount']
+    crimes_by_day.set_index('date')
+    return crimes_by_day
+
+def crimes_amount_last_day():
+    last_date = max_date()
+    crimes_last_day = statement(f"""
+    SELECT SUM(numero_hechos) as sum FROM crimesallpopulation
+    WHERE fecha = '{last_date}'
+    GROUP BY fecha
+    """)[0][0]
+    return crimes_last_day
 
 def crimes_over_time_month(start_date, end_date):
     crimes_by_day = pd.DataFrame(statement(f"""
@@ -116,13 +142,6 @@ def min_date():
     """
     )[0][0]
     return min
-
-def max_date():
-    max = statement("""
-     SELECT MAX(fecha) FROM crimesall;
-    """
-    )[0][0]
-    return max
 
 def highest_predicted_crimes(localidad):
     crimes = pd.DataFrame(statement(f"""select localidad , delito ,sum(numero_hechos) as total from crimesallpopulation
