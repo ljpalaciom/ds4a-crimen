@@ -67,7 +67,7 @@ def crimes_over_time_day_data(start_date, end_date):
     WHERE fecha BETWEEN '{start_date}' AND '{end_date}'
     GROUP BY fecha
     """))
-    crimes_by_day.columns = ['date','crime ammount']
+    crimes_by_day.columns = ['date','crime amount']
     crimes_by_day.set_index('date')
     return crimes_by_day
 
