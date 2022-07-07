@@ -19,5 +19,4 @@ layout = dbc.Container(html.Div([
     navbar,
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content'),
-    html.I(className="bi bi-info-circle-fill me-2"),
 ]), id="main-container", fluid=True)
