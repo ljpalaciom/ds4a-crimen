@@ -77,7 +77,7 @@
     margin-left: 5px;
 }
 
-.prediction-link a, a:hover{
+.prediction-link a,.prediction-link a:hover{
     color: white;  
     text-decoration: none;   
 }
@@ -90,6 +90,17 @@
     background-color: white;
     padding: 20px;
     margin-top: 20px;
+}
+
+.participant p {
+    margin: 5px;
+}
+
+.participant img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: 0px 0px;
 }
 
 .facts-title{

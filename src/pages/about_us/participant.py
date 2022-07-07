@@ -11,15 +11,15 @@ from pages.exploratory.gender_distribution import gender_distribution_layout
 from pages.exploratory.weapon_analisys import weapon_layout
 
 
-def Participant(picture, name, profession, role, linkedin):
+def Participant(picture, name, profession, role, linkedin=None):
     participant_layout = html.Div([
         dbc.Row([
-            dbc.Col("Picture",lg={"size": 4}),
+            dbc.Col(html.Img(src=picture, className="rounded mx-auto d-block"),lg={"size": 4}, className="text-center"),
             dbc.Col([
-                html.Strong("Name"),
-                html.P("Profession"),
-                html.P("Role"),
-                html.A("Linkedin", target="_blank")
+                html.P(html.Strong(name)),
+                html.P(profession),
+                html.P(role),
+                html.P(html.A("Linkedin", href=linkedin ,target="_blank")) if linkedin else '',
                 ],lg={"size": 8}),
             ], align="center"), 
     ], className="participant")
