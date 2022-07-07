@@ -14,7 +14,7 @@ model = PredictionModelLSTM()
 layout = html.Div(
     [
         html.H1("Predicción de crimenes"),
-        html.H2("Modelo LSTM, raíz del error cuadrático medio: 162.34 crímenes"),
+        html.H2("Modelo LSTM, raíz del error cuadrático medio: 130.84 crímenes"),
         dbc.CardBody(
             [            
                 dcc.DatePickerRange(
