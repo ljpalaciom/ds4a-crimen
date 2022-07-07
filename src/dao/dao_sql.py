@@ -247,7 +247,6 @@ def crimes_vs_population(yr=2015):
     """))
     crimes.columns = ['localidad', 'Población', 'numero hechos']
     crimes['hectáreas'] = [488, 1190, 2394,1830,3801,13000, 3588.1, 3328, 3800, 651, 1731,1344, 4909, 4510, 10056, 78095, 1421, 991, 6550, 21506]
-    print(crimes)
     fig = px.scatter(crimes, x="Población", y="numero hechos",
                     size='hectáreas', hover_name="localidad", 
                     color = 'localidad',color_discrete_sequence=px.colors.sequential.Plasma_r, log_x=True, size_max=60,

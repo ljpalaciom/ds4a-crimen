@@ -15,8 +15,8 @@ layout = html.Div([
                     ]
                 ),
                 html.P("Esta herramienta fue creada con el fin de entender las cifras de delitos en Bogotá, su prevalencia por sectores de la ciudad, tipos de delito, género, densidad  y su evolución en el tiempo."),
-                html.P("1. Portafolio", className="reference"),
-                html.P("2. Cotelco",  className="reference"),
+                html.Div(html.A("1. Portafolio", target="_blank", href="https://www.portafolio.co/tendencias/bogota-con-la-percepcion-de-inseguridad-mas-alta-en-6-anos-561756", className="reference")),
+                html.Div(html.A("2. Cotelco", target="_blank", href="https://www.ccb.org.co/observatorio/Analisis-Economico/Analisis-Economico/Turismo/Bogota-es-el-principal-destino-turistico-de-Colombia", className="reference")),
             ], lg={"size": 5}),
             dbc.Col([
                 html.A([html.Span("Análisis exploratorio", className="title"), html.I(className="bi bi-pie-chart-fill")] , href="/exploratory", className="page-link"),
